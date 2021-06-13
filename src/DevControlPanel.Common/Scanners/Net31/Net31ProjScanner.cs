@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using DevControlPanel.Common.Models;
 
 namespace DevControlPanel.Common.Scanners.Net31
@@ -33,6 +34,17 @@ namespace DevControlPanel.Common.Scanners.Net31
                     }
                 };
             }
+        }
+
+        private async ValueTask<string> getDevEnvSettings(string directory)
+        {
+            var file = Path.Combine(directory, "appsettings.Development.json");
+            if (!File.Exists(file))
+            {
+                return string.Empty;
+            }
+
+            return await File.ReadAllTextAsync(file);
         }
     }
 }

@@ -6,5 +6,6 @@
         public string CommandName { get; set; }
         public bool LaunchBrowser { get; set; }
         public string EnvironmentVariables { get; set; }
+        public string DevelopmentEnvSettings { get; set; }
     }
 }
