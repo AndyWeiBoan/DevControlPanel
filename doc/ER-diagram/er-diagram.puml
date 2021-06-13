@@ -1,0 +1,12 @@
+@startuml DevControlPanel ER Diagram
+
+entity "Module" as Module {}
+
+entity "Service" as Service { }
+
+entity "Env" as Env {}
+
+entity "Global_Env" as Global_Env {}
+
+entity "Configuration" as Configuration {}
+@enduml

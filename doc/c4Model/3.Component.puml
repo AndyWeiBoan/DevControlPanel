@@ -1,0 +1,36 @@
+@startuml
+
+'!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+!include <c4/C4_Component.puml> 
+
+LAYOUT_AS_SKETCH()
+LAYOUT_TOP_DOWN()
+
+
+title Component diagram for DevControlPanel System
+
+
+ContainerDb(db, "Embedded Database", "Nosql database", "Stores system setting, project configuration, access logs in Json structured data.")
+System_Ext(build_engine, "build engine", "Something like msbuild able to start or stop project in debug model")
+System_Ext(fileSystem, "File system", "Local dev environment file system")
+
+Container_Boundary(desktop_application, "DevControlPanel") {
+    Component(Gui, "UWP desktop interface", "dotnet core", "Provides interface to show the information and setting.")
+    Component(event_handler, "Event handler", "dotnet library", "To handle all event from user, system or project.")
+    Component(project_scanner, "Scanner", "dotnet library", "Scan all module and project through root path")
+    Component(project_dispatcher, "Project Dispatcher", "dotnet library", "Control project run or stop.")
+    Component(repository, "Repository", "database driver", "read and write data")
+    
+    Rel(Gui, repository, "Uses", "read data")
+    Rel(Gui, event_handler, "event")
+    Rel(event_handler, project_scanner, "Uses")
+    Rel(event_handler, project_dispatcher, "Uses")    
+    Rel(repository, db, "Read & write", "driver")
+}
+
+Rel(event_handler, repository, "Uses", "write data")
+Rel(project_dispatcher, build_engine, "Uses", "cli or framework sdk")
+Rel(project_scanner, fileSystem, "Scan file", "File descriptor")
+
+
+@enduml

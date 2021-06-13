@@ -1,0 +1,18 @@
+@startuml system-context-diagram
+
+!includeurl https://raw.githubusercontent.com/xuanye/plantuml-style-c4/master/c4_context.puml
+' uncomment the following line and comment the first to use locally
+'!include c4_context.puml
+
+LAYOUT_LEFT_RIGHT
+LAYOUT_AS_SKETCH()
+
+title System Context diagram for DevControlPanel
+
+Actor(Developer, "Developer", "A persion who is developer using DevControlPanel.")
+System(DevControlPanel, "DevControlPanel", "Allows developer start, stop and set configuration to project.")
+
+Rel(Developer, DevControlPanel, "setting")
+Rel(DevControlPanel, Developer, "return result")
+
+@enduml

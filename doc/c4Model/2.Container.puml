@@ -1,0 +1,22 @@
+@startuml container-diagram
+!includeurl https://raw.githubusercontent.com/xuanye/plantuml-style-c4/master/c4_container.puml
+' uncomment the following line and comment the first to use locally
+'!include c4_container.puml
+
+LAYOUT_AS_SKETCH()
+LAYOUT_LEFT_RIGHT
+
+title Container diagram for DevControlPanel
+
+Actor(Developer, "Developer", "A persion who is developer using DevControlPanel.")
+
+System_Boundary(c1, "Local dev environment") {
+    Container(Desktop_app, "Desktop Application", "DotNet, dotnet core UWP", "To show the project status and inspect")
+    ContainerDb(database, "Embedded Database", "Nosql", "Stores system setting, project inspect, project configuration, access logs, etc.")
+    System_Ext(build_engine, "build engine", "Something like msbuild able to start or stop project in debug model")
+}
+
+Rel(Developer, Desktop_app, "Setting", "GUI")
+Rel(Desktop_app, build_engine, "Uses", "cli or framework sdk")
+Rel(Desktop_app, database, "Write or read", "database driver for dotnet core")
+@enduml
