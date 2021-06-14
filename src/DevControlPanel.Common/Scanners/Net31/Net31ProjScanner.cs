@@ -21,6 +21,8 @@ namespace DevControlPanel.Common.Scanners.Net31
 
                 if (!result.Success) continue;
 
+                var developmentEnvSettingFilePath = Path.Combine(dir.FullName, "appsettings.Development.json");
+
                 yield return new Project<Net31Configuration>
                 {
                     Path = proj,
@@ -31,14 +33,15 @@ namespace DevControlPanel.Common.Scanners.Net31
                         CommandName = result.LaunchSetting.CommandName,
                         EnvironmentVariables = result.LaunchSetting.EnvironmentVariables,
                         LaunchBrowser = result.LaunchSetting.LaunchBrowser,
+                        DevelopmentEnvSettings = await this.getDevEnvSettings(developmentEnvSettingFilePath),
+                        DevelopmentEnvSettingFilePath = developmentEnvSettingFilePath,
                     }
                 };
             }
         }
 
-        private async ValueTask<string> getDevEnvSettings(string directory)
+        private async ValueTask<string> getDevEnvSettings(string file)
         {
-            var file = Path.Combine(directory, "appsettings.Development.json");
             if (!File.Exists(file))
             {
                 return string.Empty;

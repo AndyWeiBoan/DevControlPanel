@@ -7,5 +7,6 @@
         public bool LaunchBrowser { get; set; }
         public string EnvironmentVariables { get; set; }
         public string DevelopmentEnvSettings { get; set; }
+        public string DevelopmentEnvSettingFilePath { get; set; }
     }
 }
